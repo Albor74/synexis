@@ -1,0 +1,23 @@
+services:
+  database:
+    image: postgres:18-alpine
+    container_name: synexis
+    environment:
+      POSTGRES_DB: synexis_db
+      POSTGRES_USER: synexis
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - synexis-network
+
+networks:
+ synexis-network:
+    driver: bridge
+
+volumes:
+  db_data:
+
+
