@@ -34,3 +34,16 @@
 # Symfony local server
 /.symfony.local.yaml
 /.symfony.cloud.yaml
+
+
+.php-cs-fixer.cache
+.phpstan-cache/var/phpstan/
+
+###> friendsofphp/php-cs-fixer ###
+/.php-cs-fixer.php
+/.php-cs-fixer.cache
+###< friendsofphp/php-cs-fixer ###
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###

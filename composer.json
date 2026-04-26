@@ -58,6 +58,23 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "lint:container": "php bin/console lint:container",
+        "lint:yaml": "php bin/console lint:yaml config",
+
+        "lint:all": [
+            "@lint:container",
+            "@lint:yaml"
+        ],
+        "test:cs": "vendor/bin/php-cs-fixer fix --dry-run --diff",
+        "fix:cs": "vendor/bin/php-cs-fixer fix",
+
+        "test:phpstan": "vendor/bin/phpstan analyse",
+
+        "check:all": [
+            "@lint:all",
+            "@test:cs",
+            "@test:phpstan"
         ]
     },
     "conflict": {
@@ -70,6 +87,9 @@
         }
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.95",
+        "phpstan/phpstan-doctrine": "^2.0",
+        "phpstan/phpstan-symfony": "^2.0",
         "symfony/maker-bundle": "^1.67"
     }
 }
