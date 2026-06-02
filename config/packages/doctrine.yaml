@@ -1,41 +1,83 @@
 doctrine:
     dbal:
-        url: '%env(resolve:DATABASE_URL)%'
+        types:
+            int4range: MartinGeorgiev\Doctrine\DBAL\Types\Int4Range
+            jsonb: MartinGeorgiev\Doctrine\DBAL\Types\Jsonb
+        connections:
+            default:
+                url: '%env(resolve:DATABASE_URL)%'
+                profiling_collect_backtrace: '%kernel.debug%'
+            laboratory:
+                url: '%env(resolve:LABORATORY_DATABASE_URL)%'
+                profiling_collect_backtrace: '%kernel.debug%'
+                mapping_types:
+                    age_unit: string
+                    gender: string
+                    menstrual_phase: string
+                    pregnancy_trimester: string
+                    test_definition_status: string
+                    unit_classification: string
+                    value_type: string
+                    int4range: int4range
+                    jsonb: jsonb
 
-        # IMPORTANT: You MUST configure your server version,
-        # either here or in the DATABASE_URL env var (see .env file)
-        #server_version: '16'
-
-        profiling_collect_backtrace: '%kernel.debug%'
     orm:
-        validate_xml_mapping: true
-        naming_strategy: doctrine.orm.naming_strategy.underscore
-        identity_generation_preferences:
-            Doctrine\DBAL\Platforms\PostgreSQLPlatform: identity
-        auto_mapping: true
-        mappings:
-            App:
-                type: attribute
-                is_bundle: false
-                dir: '%kernel.project_dir%/src/Entity'
-                prefix: 'App\Entity'
-                alias: App
+        default_entity_manager: default
+        entity_managers:
+
+            default:
+                connection: default
+                validate_xml_mapping: true
+                naming_strategy: doctrine.orm.naming_strategy.underscore
+                identity_generation_preferences:
+                    Doctrine\DBAL\Platforms\PostgreSQLPlatform: identity
+                mappings:
+                    App:
+                        type: attribute
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Entity'
+                        prefix: 'App\Entity'
+                        alias: App
+            laboratory:
+                connection: laboratory
+                validate_xml_mapping: true
+                naming_strategy: doctrine.orm.naming_strategy.underscore
+                identity_generation_preferences:
+                    Doctrine\DBAL\Platforms\PostgreSQLPlatform: identity
+                mappings:
+                    LaboratoryDictionary:
+                        type: attribute
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/LaboratoryDictionary/Infrastructure/Doctrine/Entity'
+                        prefix: 'App\LaboratoryDictionary\Infrastructure\Doctrine\Entity'
 
 when@test:
     doctrine:
         dbal:
-            # "TEST_TOKEN" is typically set by ParaTest
-            dbname_suffix: '_test%env(default::TEST_TOKEN)%'
+            connections:
+                default:
+                    dbname_suffix: '_test%env(default::TEST_TOKEN)%'
+                laboratory:
+                    dbname_suffix: '_test%env(default::TEST_TOKEN)%'
 
 when@prod:
     doctrine:
         orm:
-            query_cache_driver:
-                type: pool
-                pool: doctrine.system_cache_pool
-            result_cache_driver:
-                type: pool
-                pool: doctrine.result_cache_pool
+            entity_managers:
+                default:
+                    query_cache_driver:
+                        type: pool
+                        pool: doctrine.system_cache_pool
+                    result_cache_driver:
+                        type: pool
+                        pool: doctrine.result_cache_pool
+                laboratory:
+                    query_cache_driver:
+                        type: pool
+                        pool: doctrine.system_cache_pool
+                    result_cache_driver:
+                        type: pool
+                        pool: doctrine.result_cache_pool
 
     framework:
         cache:

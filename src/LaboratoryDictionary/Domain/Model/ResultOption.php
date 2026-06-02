@@ -1,0 +1,43 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\LaboratoryDictionary\Domain\Model;
+
+use App\LaboratoryDictionary\Domain\Builder\ResultOptionBuilder;
+
+final class ResultOption
+{
+    public function __construct(
+        private readonly string $code,
+        private readonly string $title,
+        private readonly ?string $description,
+        private readonly bool $isAbnormal,
+    ) {
+    }
+
+    public function getCode(): string
+    {
+        return $this->code;
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function isAbnormal(): bool
+    {
+        return $this->isAbnormal;
+    }
+
+    public function toBuilder(): ResultOptionBuilder
+    {
+        return ResultOptionBuilder::from($this);
+    }
+}

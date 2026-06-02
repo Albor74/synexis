@@ -25,6 +25,15 @@
                 name: "{{ lookup('env', 'SYN_DB_LD_SCHEMA') }}"
                 owner: "{{ lookup('env', 'SYN_DB_LD_USERNAME') }}"
 
+        -   name: Создание расширения btree_gist
+            community.postgresql.postgresql_ext:
+                login_host: synexis
+                login_db: "{{ lookup('env', 'SYN_DB_NAME') }}"
+                login_user: "{{ lookup('env', 'SYN_DB_USERNAME') }}"
+                login_password: "{{ lookup('env', 'SYN_DB_PASSWORD') }}"
+                name: btree_gist
+                state: present
+
         -   name: Отзыв публичных прав на схему
             community.postgresql.postgresql_privs:
                 login_host: synexis

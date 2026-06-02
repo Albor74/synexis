@@ -10,7 +10,7 @@ services:
             - "${SYN_DB_PORT}:5432"
         restart: always
         volumes:
-            - db_data:/var/lib/postgresql/data
+            - ./db_data:/var/lib/postgresql
         networks:
             - synexis-network
 
@@ -24,8 +24,8 @@ services:
             - synexis
         networks:
             - synexis-network
-        profiles: ["tools"]
-        entrypoint: ["ansible-playbook", "-i", "localhost,", "playbook.yml"]
+        profiles: [ "tools" ]
+        entrypoint: [ "ansible-playbook", "-i", "localhost,", "playbook.yml" ]
 
 networks:
     synexis-network:

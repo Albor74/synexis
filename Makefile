@@ -37,4 +37,20 @@ test: warmup ## Полная проверка проекта
 ## -------- Очистка --------
 
 clean: ## Очистить кэш
-	rm -rf var/cache/*
+	php bin/console cache:clear
+
+# ------- Создать миграцию------
+mig-diff: ## Generate a new migration based on changes
+	php bin/console doctrine:migrations:diff --em=$(em)
+
+#  -------Применить миграцию -----
+mig-up: ## Execute migrations to the latest version
+	php bin/console doctrine:migrations:migrate --em=$(em) --no-interaction
+
+#  -------Откатить миграцию -----
+mig-down-v: ## Откатить конкретную миграцию (нужно передать v=номер миграции)
+           # Пример использования: make mig-down-v em=laboratory v=20260511073927
+	php bin/console doctrine:migrations:execute --em=$(em) "App\LaboratoryDictionary\Infrastructure\Doctrine\Migrations\Version$(v)" --down --no-interaction
+
+mig-list:  ## Проверка список миграций
+	  php bin/console doctrine:migrations:list --em=laboratory
