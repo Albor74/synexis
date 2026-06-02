@@ -1,0 +1,5 @@
+$kind: http-request
+url: "{{laboratory_dictionary}}/api/v1/test"
+method: POST
+examples: ./.resources/Create test.resources/examples
+order: 1000

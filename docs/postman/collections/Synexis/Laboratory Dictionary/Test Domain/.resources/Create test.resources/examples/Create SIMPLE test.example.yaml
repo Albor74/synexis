@@ -1,0 +1,24 @@
+$kind: http-example
+request:
+  url: "{{laboratory_dictionary}}/api/v1/test"
+  method: POST
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: "{\r\n    \"name\": \"SIMPLE\"\r\n}"
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: "{\r
+
+      \    \"id\": \"1\",\r
+
+      \    \"name\": \"SIMPLE\"\r
+
+      }"
+order: 1000

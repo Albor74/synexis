@@ -1,0 +1,5 @@
+name: Synexis Local
+values:
+  - key: laboratory_dictionary
+    value: 'localhost:8080'
+color: 240

@@ -46,5 +46,6 @@
 
 ###> phpstan/phpstan ###
 phpstan.neon
-###< phpstan/phpstan ###
+
 /db_data/
+/docs/.postman/
